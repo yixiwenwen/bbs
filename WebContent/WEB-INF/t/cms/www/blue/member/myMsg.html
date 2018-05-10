@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>[#if typeId??][#if typeId==2]我的留言[#elseif typeId==3]我的提醒[#else]我的消息[/#if][#else]我的消息[/#if] - ${site.name} - 恒生生钱官方论坛|开源java cms,jsp cms,jsp bbs</title>
-    <meta content="java,cms,jsp,cms,jsp bbs,开源网站内容管理系统,网站群,站群,多站点,恒生生钱" name="keywords" />
-    <meta content="讨论jsp cms、jsp bbs相关资讯，struts,hibernate,spring,freemarker最新技术研究" name="description" />
+    <title>[#if typeId??][#if typeId==2]我的留言[#elseif typeId==3]我的提醒[#else]我的消息[/#if][#else]我的消息[/#if] - ${site.name} - 恒生生钱官方论坛</title>
+    <meta content="恒生生钱" name="keywords" />
+    <meta content="恒生生钱" name="description" />
 	<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
     <script src="${resSys}/jquery.js" type="text/javascript"></script>
     <link href="/${res}/bbs_forum/css/whole.css" type="text/css" rel="stylesheet" />
@@ -37,7 +37,7 @@
     </script>
   </head>
   <body>
-    <!--header-->[#include "../include/页头.html"/]<!--/header-->
+    <!--header-->[#include "../include/header.html"/]<!--/header-->
     <!--main-->
     <div class="main-wrap">
     <div id="main">
@@ -121,6 +121,6 @@
     </div>
     </div>
     <!--/main-->
-    <!--footer-->[#include "../include/页脚.html"/]<!--footer-->
+    <!--footer-->[#include "../include/foot.html"/]<!--footer-->
   </body>
 </html>

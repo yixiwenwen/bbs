@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>${site.name} - 恒生生钱官方论坛|开源java cms,jsp cms,jsp bbs</title>
+<title>${site.name} - 恒生生钱官方论坛</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="keywords" content="java,cms,jsp,cms,jsp bbs,开源网站内容管理系统,网站群,站群,多站点,恒生生钱" />
-<meta name="description" content="讨论jsp cms、jsp bbs相关资讯，struts,hibernate,spring,freemarker最新技术研究" /> 
+<meta name="keywords" content="恒生生钱" />
+<meta name="description" content="恒生生钱" /> 
 <meta property="qc:admins" content="26435257006110776654" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -55,9 +55,9 @@ function subscribe(operate){
   
 <body>
 		<!--include-header-->
-		[#include "../include/页头.html"/]
+		[#include "../include/header.html"/]
 		<!--论坛信息-->
-		[#include "../include/论坛信息.html"/]
+		[#include "../include/bbsinfo.html"/]
 		<!--main-->
 		<div class="bbs-main clearfix">
 			<!--右侧内容-->
@@ -377,6 +377,6 @@ function subscribe(operate){
 			</div>
 		</div>
 		<!--footer-->
-		 [#include "../include/页脚.html"/] 
+		 [#include "../include/foot.html"/] 
 	</body>
 </html>

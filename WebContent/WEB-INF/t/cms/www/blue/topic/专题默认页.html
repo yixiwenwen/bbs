@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>${topic.title!}</title>
-<meta name="keywords" content="java,cms,jsp,cms,jsp bbs,开源网站内容管理系统,网站群,站群,多站点,恒生生钱" />
-<meta name="description" content="讨论jsp cms、jsp bbs相关资讯，struts,hibernate,spring,freemarker最新技术研究" /> 
+<meta name="keywords" content="恒生生钱" />
+<meta name="description" content="恒生生钱" /> 
 <meta property="qc:admins" content="26435257006110776654" />
 <script src="${resSys}/jquery.js" type="text/javascript"></script>
 <script src="${resSys}/front.js" type="text/javascript"></script>
@@ -70,13 +70,13 @@ function checkContent(){
 
 	<body>
 		<!--include-header-->
-		[#include "../include/页头.html"/]
+		[#include "../include/header.html"/]
 		<!--论坛信息-->
-		[#include "../include/论坛信息.html"/]
+		[#include "../include/bbsinfo.html"/]
 		<!--main-->
 		<div class="bbs-main clearfix">
 			<!--左侧 include-->
-			[#include "../include/左侧.html"/]
+			[#include "../include/left.html"/]
 			<!--右侧内容-->
 			<div class="right-main right-panel clearfix">
 				<!--帖子类型切换-->
@@ -661,7 +661,7 @@ function checkContent(){
 			</div>
 		</div>
 		<!--footer-->
-		[#include "../include/页脚.html"/]
+		[#include "../include/foot.html"/]
 		<script type="text/javascript">
 			function displayPostReplayDive(postId){
 				$("#innerPost"+postId).toggle();

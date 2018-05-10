@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>${site.name} - 恒生生钱官方论坛|开源java cms,jsp cms,jsp bbs</title>
-    <meta name="keywords" content="java,cms,jsp,cms,jsp bbs,开源网站内容管理系统,网站群,站群,多站点,恒生生钱" />
-    <meta name="description" content="讨论jsp cms、jsp bbs相关资讯，struts,hibernate,spring,freemarker最新技术研究" /> 
+    <title>${site.name} - 恒生生钱官方论坛</title>
+    <meta name="keywords" content="恒生生钱" />
+    <meta name="description" content="恒生生钱" /> 
 <meta property="qc:admins" content="26435257006110776654" />
 	<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
 
@@ -55,10 +55,10 @@
   <body>
   <div style="width:1000px; margin:auto;">
     <!--header--> 
-	[#include "../include/页头.html"/]
+	[#include "../include/header.html"/]
 	<!--/header-->
-	<!--20条信息_Begin--> [#include "../include/信息.html"/]<!--/End--> 
-    <!--登录统计栏_Begin-->[#include "../include/登录统计.html"/]<!--登录统计栏_End-->
+	<!--20条信息_Begin--> [#include "../include/msg.html"/]<!--/End--> 
+    <!--登录统计栏_Begin-->[#include "../include/loginstatistics.html"/]<!--登录统计栏_End-->
 	<div style="line-height:28px;">
 	<table border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -165,13 +165,13 @@
     </div>
     </div>
     </div>
-    [#include "../include/在线人数统计.html"/]
-    [#include "../include/页脚友情链接栏.html"/]
+    [#include "../include/userOnlineNum.html"/]
+    [#include "../include/friend_link.html"/]
     </div>
     <!--/main-->
     
 	<!--footer--> 
-	[#include "../include/页脚.html"/]
+	[#include "../include/foot.html"/]
 	<!--footer-->
   </body>
 </html>
