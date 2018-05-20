@@ -16,7 +16,7 @@ $(function() {
 <body>
 <h1>会员中心</h1>
 <p>欢迎您：${user.username}</p>
-[#include "会员中心页_导航.html"/]
+[#include "member_menu.html"/]
 <form id="jvForm" action="pwd.jhtml" method="post">
 <p>*原密码：<input type="password" name="origPwd" autocomplete="off" maxlength="32" vld="{required:true,remote:'checkPwd.jhtml',messages:{remote:'原密码不正确'}}"/></p>
 <p>新密码：<input type="password" id="newPwd" name="newPwd" autocomplete="off" maxlength="32"/> 不修改请留空</p>

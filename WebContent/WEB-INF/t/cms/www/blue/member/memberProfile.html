@@ -17,7 +17,7 @@ $(function() {
 <body>
 <h1>会员中心</h1>
 <p>欢迎您：${user.username}</p>
-[#include "会员中心页_导航.html"/]
+[#include "member_menu.html"/]
 <form id="jvForm" action="profile.jspx" method="post">
 <p>真实姓名：<input type="text" name="realname" value="${user.realname!?html}" maxlength="100"/></p>
 <p>性别：[@p.radio name="gender" value=user.gender list={"true":"男","false":"女","":"保密"}/]</p>

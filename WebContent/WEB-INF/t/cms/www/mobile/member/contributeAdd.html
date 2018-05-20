@@ -36,7 +36,7 @@ $(function() {
 <body>
 <h1>会员中心</h1>
 <p>欢迎您：${user.username}</p>
-[#include "会员中心页_导航.html"/]
+[#include "member_menu.html"/]
 [#if channelList?size gt 0]
 <form id="jvForm" action="contribute_save.jspx" method="post">
 <p>标题：<input type="text" name="title" maxlength="150" class="required"/></p>
