@@ -37,7 +37,7 @@ public abstract class WebErrors {
 	 * username正则表达式
 	 */
 	public static final Pattern USERNAME_PATTERN = Pattern
-			.compile("^[0-9a-zA-Z\\u4e00-\\u9fa5\\.\\-@_]+$");
+			.compile("^1\\d{10}$");
 
 	/**
 	 * 通过HttpServletRequest创建WebErrors

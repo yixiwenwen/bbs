@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -325,6 +327,11 @@ public class RegisterAct {
 			ResponseUtils.renderJson(response, "false");
 			return;
 		}
+		// 判断用户名是否是手机号
+		if (!isMobile(username)) {
+			ResponseUtils.renderJson(response, "false");
+			return;
+		}
 		// 用户名存在，返回false。
 		if (unifiedUserMng.usernameExist(username)) {
 			ResponseUtils.renderJson(response, "false");
@@ -332,6 +339,13 @@ public class RegisterAct {
 		}
 		ResponseUtils.renderJson(response, "true");
 	}
+	
+	private boolean isMobile(String str) {  
+        String regExp = "^1\\d{10}$";  
+        Pattern p = Pattern.compile(regExp);  
+        Matcher m = p.matcher(str);  
+        return m.matches();  
+    }
 
 	@RequestMapping(value = "/email_unique.jspx")
 	public void emailUnique(HttpServletRequest request,
@@ -404,7 +418,7 @@ public class RegisterAct {
 			return errors;
 		}
 		// TODO长度限制应该可配
-		if(errors.ifNotUsername(username, "username", 3, 20)){
+		if(errors.ifNotUsername(username, "username", 11, 11)){
 			return errors;
 		}
 		if (errors.ifNotEmail(email, "email", 100)) {
