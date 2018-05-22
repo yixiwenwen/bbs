@@ -7,15 +7,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +21,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jeecms.core.entity.CmsSite;
-import com.jeecms.core.entity.UnifiedUser;
-import com.jeecms.core.manager.UnifiedUserMng;
-import com.octo.captcha.service.image.ImageCaptchaService;
 import com.jeecms.bbs.entity.ApiAccount;
 import com.jeecms.bbs.entity.ApiUserLogin;
 import com.jeecms.bbs.entity.BbsUser;
@@ -36,16 +30,16 @@ import com.jeecms.bbs.manager.BbsLoginLogMng;
 import com.jeecms.bbs.manager.BbsUserMng;
 import com.jeecms.bbs.web.CmsUtils;
 import com.jeecms.bbs.web.FrontUtils;
-import com.jeecms.common.security.CaptchaErrorException;
-import com.jeecms.common.security.CaptchaRequiredException;
-import com.jeecms.common.security.DisabledException;
-import com.jeecms.common.security.InactiveException;
 import com.jeecms.common.util.AES128Util;
 import com.jeecms.common.web.CookieUtils;
 import com.jeecms.common.web.LoginUtils;
 import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.ResponseUtils;
 import com.jeecms.common.web.session.SessionProvider;
+import com.jeecms.core.entity.CmsSite;
+import com.jeecms.core.entity.UnifiedUser;
+import com.jeecms.core.manager.UnifiedUserMng;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 @Controller
 public class CasLoginAct {
@@ -95,6 +89,11 @@ public class CasLoginAct {
 	public void submitAjax(String username,String password,Boolean rememberMe,
 			HttpServletRequest request, 
 			HttpServletResponse response,ModelMap model)  {
+		// 判断用户名是否是手机号
+		if (!isMobile(username)) {
+			ResponseUtils.renderJson(response, "false");
+		}
+		
 		//验证码校验
 		if (isCaptchaRequired(username,request, response)) {
 			String captcha = request.getParameter(CAPTCHA_PARAM);
@@ -140,6 +139,13 @@ public class CasLoginAct {
 			ResponseUtils.renderJson(response, "false");
 		}
 	}
+	
+	private boolean isMobile(String str) {  
+        String regExp = "^1\\d{10}$";  
+        Pattern p = Pattern.compile(regExp);  
+        Matcher m = p.matcher(str);  
+        return m.matches();  
+    }  
 	
 	@RequestMapping(value = "/adminLogin.jspx", method = RequestMethod.POST)
 	public void adminLogin(HttpServletRequest request, 

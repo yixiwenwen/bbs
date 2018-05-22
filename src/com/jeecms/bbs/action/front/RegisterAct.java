@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
 import com.jeecms.bbs.cache.BbsConfigEhCache;
 import com.jeecms.bbs.entity.BbsConfig;
 import com.jeecms.bbs.entity.BbsLoginLog;
@@ -37,9 +40,11 @@ import com.jeecms.bbs.manager.BbsUserOnlineMng;
 import com.jeecms.bbs.manager.BbsWebserviceMng;
 import com.jeecms.bbs.web.CmsUtils;
 import com.jeecms.bbs.web.FrontUtils;
+import com.jeecms.bbs.web.ResultVo;
 import com.jeecms.bbs.web.WebErrors;
 import com.jeecms.common.email.EmailSender;
 import com.jeecms.common.email.MessageTemplate;
+import com.jeecms.common.web.HttpClientUtil;
 import com.jeecms.common.web.LoginUtils;
 import com.jeecms.common.web.RequestUtils;
 import com.jeecms.common.web.ResponseUtils;
@@ -238,6 +243,13 @@ public class RegisterAct {
 						model.addAttribute("success",true);
 						LoginUtils.loginShiro(request, response, username);
 					}
+					
+					// 查询手机号是否在现金贷项目有支付订单，如果已经有支付订单则额外赠送积分
+					try {
+						queryUserLoanOrderNum(username);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			}else{
 				json.put("status", -1);
@@ -246,6 +258,23 @@ public class RegisterAct {
 			// TODO: handle exception
 		}
 		ResponseUtils.renderJson(response,json.toString());
+	}
+
+	private void queryUserLoanOrderNum(String username) {
+		String url = "http://www.hengshengsq.com/cashloan/user/paySuccOrderNum.htm";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("mobile", username);
+		String responseStr = HttpClientUtil.getInstance().postParams(url, params);
+		Gson gson = new Gson();
+		ResultVo resultVo = gson.fromJson(responseStr, ResultVo.class);
+		if (resultVo != null && resultVo.getStatus() == 0) {
+			// 接口访问成功
+			Integer num = Integer.parseInt(String.valueOf(resultVo.getData()));
+			if (num != null && num > 0) {
+				// TODO:额外给用户增加积分
+			}
+			
+		}
 	}
 	
 	@RequestMapping(value = "/appregister.jspx")
@@ -325,6 +354,11 @@ public class RegisterAct {
 			ResponseUtils.renderJson(response, "false");
 			return;
 		}
+		// 判断用户名是否是手机号
+		if (!isMobile(username)) {
+			ResponseUtils.renderJson(response, "false");
+			return;
+		}
 		// 用户名存在，返回false。
 		if (unifiedUserMng.usernameExist(username)) {
 			ResponseUtils.renderJson(response, "false");
@@ -332,6 +366,13 @@ public class RegisterAct {
 		}
 		ResponseUtils.renderJson(response, "true");
 	}
+	
+	private boolean isMobile(String str) {  
+        String regExp = "^1\\d{10}$";  
+        Pattern p = Pattern.compile(regExp);  
+        Matcher m = p.matcher(str);  
+        return m.matches();  
+    }
 
 	@RequestMapping(value = "/email_unique.jspx")
 	public void emailUnique(HttpServletRequest request,
@@ -404,7 +445,7 @@ public class RegisterAct {
 			return errors;
 		}
 		// TODO长度限制应该可配
-		if(errors.ifNotUsername(username, "username", 3, 20)){
+		if(errors.ifNotUsername(username, "username", 11, 11)){
 			return errors;
 		}
 		if (errors.ifNotEmail(email, "email", 100)) {
